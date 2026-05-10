@@ -16,11 +16,14 @@
     form { background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
     label { display:block; margin:10px 0 5px; font-weight:bold; color:#9b59b6; }
     input, textarea { width:100%; padding:10px; border:1px solid #c9a9e9; border-radius:5px; }
-    button { margin-top:20px; background:#9b59b6; color:white; border:none; padding:12px 20px; border-radius:25px; font-weight:bold; cursor:pointer; }
+    button { margin-top:20px; background:#9b59b6; color:white; border:none; padding:12px 20px; border-radius:25px; font-weight:bold; cursor:pointer; width: 100%; }
     button:hover { background:#c9a9e9; }
     footer { background-color:#c9a9e9; color:white; text-align:center; padding:20px; margin-top:40px; }
     .socials a { margin:0 10px; font-size:1.2em; color:white; text-decoration:none; font-weight:bold; }
     .socials a:hover { text-decoration:underline; }
+    
+    /* Style for quantity inputs to make them look nice */
+    .qty-input { width: 50px; text-align: center; border: 1px solid #9b59b6; border-radius: 4px; }
   </style>
 </head>
 <body>
@@ -39,27 +42,42 @@
 <section class="section">
   <h1>🛒 Checkout</h1>
 
-  <!-- Cart Summary -->
   <table>
-    <tr><th>Item</th><th>Quantity</th><th>Price (₦)</th></tr>
-    <tr><td>Bracelet</td><td>1</td><td>2000</td></tr>
-    <tr><td>Rings (Set of 10)</td><td>1</td><td>2000</td></tr>
-    <tr><td><strong>Total</strong></td><td></td><td><strong>4000</strong></td></tr>
+    <thead>
+        <tr><th>Item</th><th>Quantity</th><th>Price (₦)</th></tr>
+    </thead>
+    <tbody>
+        <tr class="cart-item">
+            <td>Bracelet</td>
+            <td><input type="number" class="qty-input" value="1" min="1" data-price="2000"></td>
+            <td class="item-total">2000</td>
+        </tr>
+        <tr class="cart-item">
+            <td>Rings (Set of 10)</td>
+            <td><input type="number" class="qty-input" value="1" min="1" data-price="2000"></td>
+            <td class="item-total">2000</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2"><strong>Total</strong></td>
+            <td><strong id="grand-total">4000</strong></td>
+        </tr>
+    </tfoot>
   </table>
 
-  <!-- Customer Info Form -->
-  <form>
+  <form id="checkout-form">
     <label for="name">Full Name</label>
-    <input type="text" id="name" name="name" required>
+    <input type="text" id="name" name="name" required placeholder="Enter your name">
 
     <label for="email">Email Address</label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="email" required placeholder="example@email.com">
 
     <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" name="phone" required>
+    <input type="tel" id="phone" name="phone" required placeholder="080 000 0000">
 
     <label for="address">Delivery Address</label>
-    <textarea id="address" name="address" rows="3" required></textarea>
+    <textarea id="address" name="address" rows="3" required placeholder="Where should we send your beads?"></textarea>
 
     <button type="submit">Place Order</button>
   </form>
@@ -72,6 +90,54 @@
   </div>
   <p>© 2026 Beads by Ruby</p>
 </footer>
+
+<script>
+    // 1. SELECT ELEMENTS
+    const qtyInputs = document.querySelectorAll('.qty-input');
+    const grandTotalDisplay = document.getElementById('grand-total');
+    const checkoutForm = document.getElementById('checkout-form');
+
+    // 2. FUNCTION TO CALCULATE TOTALS
+    function updateTotals() {
+        let grandTotal = 0;
+
+        // Loop through each row
+        document.querySelectorAll('.cart-item').forEach(row => {
+            const qtyInput = row.querySelector('.qty-input');
+            const pricePerItem = parseInt(qtyInput.getAttribute('data-price'));
+            const quantity = parseInt(qtyInput.value);
+            
+            // Calculate row subtotal
+            const rowTotal = pricePerItem * quantity;
+            row.querySelector('.item-total').innerText = rowTotal;
+
+            grandTotal += rowTotal;
+        });
+
+        // Update the big total at the bottom
+        grandTotalDisplay.innerText = grandTotal.toLocaleString();
+    }
+
+    // 3. LISTEN FOR QUANTITY CHANGES
+    qtyInputs.forEach(input => {
+        input.addEventListener('input', updateTotals);
+    });
+
+    // 4. HANDLE FORM SUBMISSION
+    checkoutForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevents page from refreshing
+        
+        const customerName = document.getElementById('name').value;
+        const totalAmount = grandTotalDisplay.innerText;
+
+        // Pop up a confirmation message
+        alert(`Thank you, ${customerName}! Your order for ₦${totalAmount} has been received. Beads by Ruby will contact you soon!`);
+        
+        // Reset the form
+        checkoutForm.reset();
+        updateTotals();
+    });
+</script>
 
 </body>
 </html>
