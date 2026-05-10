@@ -8,7 +8,7 @@
     body { font-family:'Poppins',sans-serif; background-color:#e6d6f5; margin:0; }
     header { background-color:#c9a9e9; color:white; padding:15px 30px; display:flex; justify-content:space-between; align-items:center; }
     nav a { color:white; text-decoration:none; margin:0 10px; font-weight:500; }
-    .section { padding:40px 20px; max-width:900px; margin:auto; }
+    .section { padding:40px 20px; max-width:800px; margin:auto; }
     h1 { text-align:center; color:#9b59b6; }
     table { width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.1); margin-bottom:30px; }
     th, td { border:1px solid #c9a9e9; padding:12px; text-align:center; }
@@ -17,7 +17,6 @@
     label { display:block; margin:10px 0 5px; font-weight:bold; color:#9b59b6; }
     input, textarea { width:100%; padding:10px; border:1px solid #c9a9e9; border-radius:5px; box-sizing: border-box; }
     .qty-input { width: 60px; padding: 5px; text-align: center; }
-    .remove-btn { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8em; }
     button[type="submit"] { margin-top:20px; background:#9b59b6; color:white; border:none; padding:15px 20px; border-radius:25px; font-weight:bold; cursor:pointer; width: 100%; font-size: 1.1em; }
     button[type="submit"]:hover { background:#c9a9e9; }
     footer { background-color:#c9a9e9; color:white; text-align:center; padding:20px; margin-top:40px; }
@@ -47,7 +46,6 @@
         <th>Price (₦)</th>
         <th>Quantity</th>
         <th>Subtotal (₦)</th>
-        <th>Action</th>
       </tr>
     </thead>
     <tbody id="cart-body">
@@ -56,69 +54,60 @@
         <td>2,000</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Waist Bead</td>
         <td>3,000</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Beaded Bra</td>
         <td>25,000</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="25000"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Necklace</td>
         <td>3,000</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Keychain</td>
         <td>1,500</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Earrings</td>
         <td>1,500</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Bags</td>
         <td>26,000</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="26000"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Rings (Set of 5)</td>
         <td>1,000</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="1000"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
       <tr class="cart-item">
         <td>Rings (Set of 10)</td>
         <td>2,000</td>
         <td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td>
         <td class="item-total">0</td>
-        <td><button class="remove-btn">x</button></td>
       </tr>
     </tbody>
     <tfoot>
       <tr style="background-color: #f9f4ff;">
         <td colspan="3" style="text-align: right;"><strong>Grand Total:</strong></td>
-        <td colspan="2"><strong style="color: #9b59b6; font-size: 1.2em;">₦ <span id="grand-total">0</span></strong></td>
+        <td><strong style="color: #9b59b6; font-size: 1.2em;">₦ <span id="grand-total">0</span></strong></td>
       </tr>
     </tfoot>
   </table>
@@ -133,7 +122,7 @@
     <label for="address">Delivery Address</label>
     <textarea id="address" rows="3" required></textarea>
 
-    <button type="submit">Confirm Order via WhatsApp</button>
+    <button type="submit">Place Order</button>
   </form>
 </section>
 
@@ -148,7 +137,6 @@
   const cartBody = document.getElementById('cart-body');
   const grandTotalDisplay = document.getElementById('grand-total');
 
-  // Function to calculate everything
   function calculateTotal() {
     let grandTotal = 0;
     const rows = document.querySelectorAll('.cart-item');
@@ -165,33 +153,24 @@
     grandTotalDisplay.innerText = grandTotal.toLocaleString();
   }
 
-  // Listen for quantity changes
+  // Calculate whenever a quantity changes
   cartBody.addEventListener('input', (e) => {
     if (e.target.classList.contains('qty-input')) {
       calculateTotal();
     }
   });
 
-  // Handle Remove buttons
-  cartBody.addEventListener('click', (e) => {
-    if (e.target.classList.contains('remove-btn')) {
-      e.target.closest('tr').remove();
-      calculateTotal();
-    }
-  });
-
-  // Final Order logic
   document.getElementById('order-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const total = grandTotalDisplay.innerText;
     
     if(total === "0") {
-      alert("Your cart is empty! Please add some beads.");
+      alert("Your cart is empty!");
       return;
     }
 
-    alert(`Order Confirmed!\n\nName: ${name}\nTotal: ₦${total}\n\nBeads by Ruby will contact you shortly!`);
+    alert(`Order Received!\n\nName: ${name}\nTotal: ₦${total}\n\nThank you for shopping with Beads by Ruby!`);
   });
 </script>
 
