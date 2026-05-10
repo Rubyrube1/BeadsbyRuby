@@ -21,6 +21,29 @@
     button[type="submit"]:hover { background:#c9a9e9; }
     footer { background-color:#c9a9e9; color:white; text-align:center; padding:20px; margin-top:40px; }
     .socials a { margin:0 10px; font-size:1.2em; color:white; text-decoration:none; font-weight:bold; }
+
+    /* --- PAYMENT MODAL STYLES --- */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
+    .modal-content { background: white; margin: 5% auto; padding: 0; width: 90%; max-width: 400px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; animation: slideUp 0.4s ease; }
+    @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    
+    .modal-header { background: #fcfaff; padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .pay-title { font-weight: bold; color: #333; font-size: 0.9em; }
+    .amount-badge { color: #2ecc71; font-weight: bold; font-size: 1.1em; }
+    
+    .modal-body { padding: 20px; text-align: left; }
+    .transfer-instruction { font-size: 0.85em; color: #666; margin-bottom: 15px; line-height: 1.4; }
+    
+    .detail-card { background: #f9f9f9; border: 1px solid #eee; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+    .detail-label { font-size: 0.75em; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .detail-value { font-weight: bold; font-size: 1.05em; color: #333; display: flex; justify-content: space-between; align-items: center; }
+    
+    .copy-btn { color: #9b59b6; font-size: 0.8em; cursor: pointer; font-weight: bold; background: #f0e6ff; padding: 4px 8px; border-radius: 5px; }
+    .copy-btn:active { transform: scale(0.95); }
+    
+    .timer-text { text-align: center; color: #2ecc71; font-size: 0.9em; font-weight: bold; margin: 15px 0; display: block; }
+    .sent-btn { background: #2ecc71; color: white; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1em; }
+    .close-x { cursor: pointer; color: #aaa; font-size: 1.5em; }
   </style>
 </head>
 <body>
@@ -49,60 +72,15 @@
       </tr>
     </thead>
     <tbody id="cart-body">
-      <tr class="cart-item">
-        <td>Bracelet</td>
-        <td>2,000</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Waist Bead</td>
-        <td>3,000</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Beaded Bra</td>
-        <td>25,000</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="25000"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Necklace</td>
-        <td>3,000</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Keychain</td>
-        <td>1,500</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Earrings</td>
-        <td>1,500</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Bags</td>
-        <td>26,000</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="26000"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Rings (Set of 5)</td>
-        <td>1,000</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="1000"></td>
-        <td class="item-total">0</td>
-      </tr>
-      <tr class="cart-item">
-        <td>Rings (Set of 10)</td>
-        <td>2,000</td>
-        <td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td>
-        <td class="item-total">0</td>
-      </tr>
+      <tr class="cart-item"><td>Bracelet</td><td>2,000</td><td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Waist Bead</td><td>3,000</td><td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Beaded Bra</td><td>25,000</td><td><input type="number" class="qty-input" value="0" min="0" data-price="25000"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Necklace</td><td>3,000</td><td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Keychain</td><td>1,500</td><td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Earrings</td><td>1,500</td><td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Bags</td><td>26,000</td><td><input type="number" class="qty-input" value="0" min="0" data-price="26000"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Rings (Set of 5)</td><td>1,000</td><td><input type="number" class="qty-input" value="0" min="0" data-price="1000"></td><td class="item-total">0</td></tr>
+      <tr class="cart-item"><td>Rings (Set of 10)</td><td>2,000</td><td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td><td class="item-total">0</td></tr>
     </tbody>
     <tfoot>
       <tr style="background-color: #f9f4ff;">
@@ -115,16 +93,49 @@
   <form id="order-form">
     <label for="name">Full Name</label>
     <input type="text" id="name" required>
-
     <label for="phone">Phone Number</label>
     <input type="tel" id="phone" required>
-
     <label for="address">Delivery Address</label>
     <textarea id="address" rows="3" required></textarea>
-
     <button type="submit">Place Order</button>
   </form>
 </section>
+
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="pay-title">PAYSTACK CHECKOUT</span>
+      <span class="amount-badge">NGN <span id="modal-amount">0</span></span>
+      <span class="close-x" onclick="closeModal()">&times;</span>
+    </div>
+    
+    <div class="modal-body">
+      <p class="transfer-instruction">Transfer the exact amount above to the account details below via your bank app.</p>
+      
+      <div class="detail-card">
+        <div class="detail-label">Bank Name</div>
+        <div class="detail-value">OPay Digital Services Limited</div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-label">Account Number</div>
+        <div class="detail-value">
+          <span id="acc-num">9160000420</span>
+          <span class="copy-btn" onclick="copyAccount()">COPY</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-label">Account Name</div>
+        <div class="detail-value" style="font-size: 0.9em;">ERIAREMIEN HOPE ADEYEMO</div>
+      </div>
+
+      <span class="timer-text">Expires in 29:45</span>
+    </div>
+    
+    <button class="sent-btn" onclick="confirmPayment()">I have sent the money</button>
+  </div>
+</div>
 
 <footer>
   <div class="socials">
@@ -136,42 +147,61 @@
 <script>
   const cartBody = document.getElementById('cart-body');
   const grandTotalDisplay = document.getElementById('grand-total');
+  const modal = document.getElementById('paymentModal');
+  const modalAmount = document.getElementById('modal-amount');
 
   function calculateTotal() {
     let grandTotal = 0;
     const rows = document.querySelectorAll('.cart-item');
-    
     rows.forEach(row => {
       const price = parseInt(row.querySelector('.qty-input').dataset.price);
       const qty = parseInt(row.querySelector('.qty-input').value) || 0;
       const subtotal = price * qty;
-      
       row.querySelector('.item-total').innerText = subtotal.toLocaleString();
       grandTotal += subtotal;
     });
-
     grandTotalDisplay.innerText = grandTotal.toLocaleString();
+    modalAmount.innerText = grandTotal.toLocaleString();
   }
 
-  // Calculate whenever a quantity changes
   cartBody.addEventListener('input', (e) => {
     if (e.target.classList.contains('qty-input')) {
       calculateTotal();
     }
   });
 
+  // Open Modal on Form Submit
   document.getElementById('order-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const total = grandTotalDisplay.innerText;
-    
-    if(total === "0") {
-      alert("Your cart is empty!");
+    if(grandTotalDisplay.innerText === "0") {
+      alert("Please add items to your cart first!");
       return;
     }
-
-    alert(`Order Received!\n\nName: ${name}\nTotal: ₦${total}\n\nThank you for shopping with Beads by Ruby!`);
+    modal.style.display = "block";
   });
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  function copyAccount() {
+    const accNum = document.getElementById('acc-num').innerText;
+    navigator.clipboard.writeText(accNum);
+    alert("Account number copied to clipboard!");
+  }
+
+  function confirmPayment() {
+    const name = document.getElementById('name').value;
+    alert(`Thank you, ${name}! Your order is being processed. Please send your transfer receipt to our WhatsApp/DM to finalize.`);
+    closeModal();
+  }
+
+  // Close modal if user clicks outside of it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      closeModal();
+    }
+  }
 </script>
 
 </body>
