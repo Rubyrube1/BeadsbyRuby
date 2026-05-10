@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beads by Ruby - Checkout</title>
+  <style>
+    body { font-family:'Poppins',sans-serif; background-color:#e6d6f5; margin:0; }
+    header { background-color:#c9a9e9; color:white; padding:15px 30px; display:flex; justify-content:space-between; align-items:center; }
+    nav a { color:white; text-decoration:none; margin:0 10px; font-weight:500; }
+    .section { padding:40px 20px; max-width:800px; margin:auto; }
+    h1 { text-align:center; color:#9b59b6; }
+    table { width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.1); margin-bottom:30px; }
+    th, td { border:1px solid #c9a9e9; padding:12px; text-align:center; }
+    th { background-color:#c9a9e9; color:white; }
+    form { background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+    label { display:block; margin:10px 0 5px; font-weight:bold; color:#9b59b6; }
+    input, textarea { width:100%; padding:10px; border:1px solid #c9a9e9; border-radius:5px; }
+    button { margin-top:20px; background:#9b59b6; color:white; border:none; padding:12px 20px; border-radius:25px; font-weight:bold; cursor:pointer; }
+    button:hover { background:#c9a9e9; }
+    footer { background-color:#c9a9e9; color:white; text-align:center; padding:20px; margin-top:40px; }
+    .socials a { margin:0 10px; font-size:1.2em; color:white; text-decoration:none; font-weight:bold; }
+    .socials a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>Beads by Ruby 💜</h2>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="customize.html">Customize</a>
+    <a href="contact.html">Contact</a>
+    <a href="checkout.html">Checkout</a>
+  </nav>
+</header>
+
+<section class="section">
+  <h1>🛒 Checkout</h1>
+
+  <!-- Cart Summary -->
+  <table>
+    <tr><th>Item</th><th>Quantity</th><th>Price (₦)</th></tr>
+    <tr><td>Bracelet</td><td>1</td><td>2000</td></tr>
+    <tr><td>Rings (Set of 10)</td><td>1</td><td>2000</td></tr>
+    <tr><td><strong>Total</strong></td><td></td><td><strong>4000</strong></td></tr>
+  </table>
+
+  <!-- Customer Info Form -->
+  <form>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="address">Delivery Address</label>
+    <textarea id="address" name="address" rows="3" required></textarea>
+
+    <button type="submit">Place Order</button>
+  </form>
+</section>
+
+<footer>
+  <h3>Follow Us!</h3>
+  <div class="socials">
+    <a href="https://www.tiktok.com/@beadsbyruby2?is_from_webapp=1&sender_device=pc" target="_blank">TikTok</a>
+  </div>
+  <p>© 2026 Beads by Ruby</p>
+</footer>
+
+</body>
+</html>
