@@ -90,13 +90,23 @@
     </tfoot>
   </table>
 
-  <form id="order-form">
+  <!-- UPDATE: Replace your-email@email.com with your real email address -->
+  <form id="order-form" action="https://formsubmit.co/your-email@email.com" method="POST">
+    
+    <!-- Hidden setup for FormSubmit -->
+    <input type="hidden" name="_subject" value="New Beads by Ruby Order!">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="Total_Amount" id="hidden-total" value="0">
+
     <label for="name">Full Name</label>
-    <input type="text" id="name" required>
+    <input type="text" id="name" name="Customer_Name" required>
+    
     <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" required>
+    <input type="tel" id="phone" name="Phone_Number" required>
+    
     <label for="address">Delivery Address</label>
-    <textarea id="address" rows="3" required></textarea>
+    <textarea id="address" name="Delivery_Address" rows="3" required></textarea>
+    
     <button type="submit">Place Order</button>
   </form>
 </section>
@@ -129,8 +139,6 @@
         <div class="detail-label">Account Name</div>
         <div class="detail-value" style="font-size: 0.9em;">ERIAREMIEN HOPE ADEYEMI</div>
       </div>
-
-      
     </div>
     
     <button class="sent-btn" onclick="confirmPayment()">I have sent the money</button>
@@ -147,6 +155,7 @@
 <script>
   const cartBody = document.getElementById('cart-body');
   const grandTotalDisplay = document.getElementById('grand-total');
+  const hiddenTotalInput = document.getElementById('hidden-total');
   const modal = document.getElementById('paymentModal');
   const modalAmount = document.getElementById('modal-amount');
 
@@ -162,6 +171,8 @@
     });
     grandTotalDisplay.innerText = grandTotal.toLocaleString();
     modalAmount.innerText = grandTotal.toLocaleString();
+    // Update the hidden input so it's sent to your email
+    hiddenTotalInput.value = "₦" + grandTotal.toLocaleString();
   }
 
   cartBody.addEventListener('input', (e) => {
@@ -170,14 +181,21 @@
     }
   });
 
-  // Open Modal on Form Submit
+  // IMPORTANT: We handle the modal show and data submission here
   document.getElementById('order-form').addEventListener('submit', function(e) {
-    e.preventDefault();
     if(grandTotalDisplay.innerText === "0") {
+      e.preventDefault();
       alert("Please add items to your cart first!");
       return;
     }
+    
+    // Show the modal so they see where to pay
     modal.style.display = "block";
+    
+    // Since we want the form to actually send the data to your email, 
+    // we don't necessarily want to "e.preventDefault()" unless we use AJAX.
+    // To make it easy: The user clicks "Place Order", the form sends, Netlify/Formsubmit 
+    // redirects back to your page, and the modal stays visible (or you can trigger it on load).
   });
 
   function closeModal() {
@@ -196,7 +214,6 @@
     closeModal();
   }
 
-  // Close modal if user clicks outside of it
   window.onclick = function(event) {
     if (event.target == modal) {
       closeModal();
