@@ -8,22 +8,20 @@
     body { font-family:'Poppins',sans-serif; background-color:#e6d6f5; margin:0; }
     header { background-color:#c9a9e9; color:white; padding:15px 30px; display:flex; justify-content:space-between; align-items:center; }
     nav a { color:white; text-decoration:none; margin:0 10px; font-weight:500; }
-    .section { padding:40px 20px; max-width:800px; margin:auto; }
+    .section { padding:40px 20px; max-width:900px; margin:auto; }
     h1 { text-align:center; color:#9b59b6; }
     table { width:100%; border-collapse:collapse; background:white; border-radius:10px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.1); margin-bottom:30px; }
     th, td { border:1px solid #c9a9e9; padding:12px; text-align:center; }
     th { background-color:#c9a9e9; color:white; }
     form { background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
     label { display:block; margin:10px 0 5px; font-weight:bold; color:#9b59b6; }
-    input, textarea { width:100%; padding:10px; border:1px solid #c9a9e9; border-radius:5px; }
-    button { margin-top:20px; background:#9b59b6; color:white; border:none; padding:12px 20px; border-radius:25px; font-weight:bold; cursor:pointer; width: 100%; }
-    button:hover { background:#c9a9e9; }
+    input, textarea { width:100%; padding:10px; border:1px solid #c9a9e9; border-radius:5px; box-sizing: border-box; }
+    .qty-input { width: 60px; padding: 5px; text-align: center; }
+    .remove-btn { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8em; }
+    button[type="submit"] { margin-top:20px; background:#9b59b6; color:white; border:none; padding:15px 20px; border-radius:25px; font-weight:bold; cursor:pointer; width: 100%; font-size: 1.1em; }
+    button[type="submit"]:hover { background:#c9a9e9; }
     footer { background-color:#c9a9e9; color:white; text-align:center; padding:20px; margin-top:40px; }
     .socials a { margin:0 10px; font-size:1.2em; color:white; text-decoration:none; font-weight:bold; }
-    .socials a:hover { text-decoration:underline; }
-    
-    /* Style for quantity inputs to make them look nice */
-    .qty-input { width: 50px; text-align: center; border: 1px solid #9b59b6; border-radius: 4px; }
   </style>
 </head>
 <body>
@@ -40,117 +38,161 @@
 </header>
 
 <section class="section">
-  <h1>🛒 Checkout</h1>
+  <h1>🛒 Your Order Summary</h1>
 
   <table>
     <thead>
-        <tr><th>Item</th><th>Quantity</th><th>Price (₦)</th></tr>
+      <tr>
+        <th>Item</th>
+        <th>Price (₦)</th>
+        <th>Quantity</th>
+        <th>Subtotal (₦)</th>
+        <th>Action</th>
+      </tr>
     </thead>
-    <tbody>
-        <tr class="cart-item">
-            <td>Bracelet</td>
-            <td><input type="number" class="qty-input" value="1" min="1" data-price="2000"></td>
-            <td class="item-total">2000</td>
-        </tr>
-        <tr class="cart-item">
-            <td>Rings (Set of 10)</td>
-            <td><input type="number" class="qty-input" value="1" min="1" data-price="2000"></td>
-            <td class="item-total">2000</td>
-        </tr>
-       <tr class="cart-item">
-            <td>Rings (Set of 5)</td>
-            <td><input type="number" class="qty-input" value="1" min="1" data-price="2000"></td>
-            <td class="item-total">1000</td>
+    <tbody id="cart-body">
+      <tr class="cart-item">
+        <td>Bracelet</td>
+        <td>2,000</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Waist Bead</td>
+        <td>3,000</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Beaded Bra</td>
+        <td>25,000</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="25000"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Necklace</td>
+        <td>3,000</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="3000"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Keychain</td>
+        <td>1,500</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Earrings</td>
+        <td>1,500</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="1500"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Bags</td>
+        <td>26,000</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="26000"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Rings (Set of 5)</td>
+        <td>1,000</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="1000"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
+      <tr class="cart-item">
+        <td>Rings (Set of 10)</td>
+        <td>2,000</td>
+        <td><input type="number" class="qty-input" value="0" min="0" data-price="2000"></td>
+        <td class="item-total">0</td>
+        <td><button class="remove-btn">x</button></td>
+      </tr>
     </tbody>
     <tfoot>
-        <tr>
-           <tr class="cart-item">
-            <td>Waist bead</td>
-            <td><input type="number" class="qty-input" value="1" min="1" data-price="2000"></td>
-            <td class="item-total">3000</td>
-             
-              <tr class="cart-item">
-            <td>Beaded Bra </td>
-            <td><input type="number" class="qty-input" value="1" min="1" data-price="2000"></td>
-            <td class="item-total">25000</td>
-
-            <td colspan="2"><strong>Total</strong></td>
-            <td><strong id="grand-total">4000</strong></td>
-        </tr>
+      <tr style="background-color: #f9f4ff;">
+        <td colspan="3" style="text-align: right;"><strong>Grand Total:</strong></td>
+        <td colspan="2"><strong style="color: #9b59b6; font-size: 1.2em;">₦ <span id="grand-total">0</span></strong></td>
+      </tr>
     </tfoot>
   </table>
 
-  <form id="checkout-form">
+  <form id="order-form">
     <label for="name">Full Name</label>
-    <input type="text" id="name" name="name" required placeholder="Enter your name">
-
-    <label for="email">Email Address</label>
-    <input type="email" id="email" name="email" required placeholder="example@email.com">
+    <input type="text" id="name" required>
 
     <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" name="phone" required placeholder="080 000 0000">
+    <input type="tel" id="phone" required>
 
     <label for="address">Delivery Address</label>
-    <textarea id="address" name="address" rows="3" required placeholder="Where should we send your beads?"></textarea>
+    <textarea id="address" rows="3" required></textarea>
 
-    <button type="submit">Place Order</button>
+    <button type="submit">Confirm Order via WhatsApp</button>
   </form>
 </section>
 
 <footer>
-  <h3>Follow Us!</h3>
   <div class="socials">
-    <a href="https://www.tiktok.com/@beadsbyruby2?is_from_webapp=1&sender_device=pc" target="_blank">TikTok</a>
+    <a href="https://www.tiktok.com/@beadsbyruby2" target="_blank">TikTok</a>
   </div>
   <p>© 2026 Beads by Ruby</p>
 </footer>
 
 <script>
-    // 1. SELECT ELEMENTS
-    const qtyInputs = document.querySelectorAll('.qty-input');
-    const grandTotalDisplay = document.getElementById('grand-total');
-    const checkoutForm = document.getElementById('checkout-form');
+  const cartBody = document.getElementById('cart-body');
+  const grandTotalDisplay = document.getElementById('grand-total');
 
-    // 2. FUNCTION TO CALCULATE TOTALS
-    function updateTotals() {
-        let grandTotal = 0;
+  // Function to calculate everything
+  function calculateTotal() {
+    let grandTotal = 0;
+    const rows = document.querySelectorAll('.cart-item');
+    
+    rows.forEach(row => {
+      const price = parseInt(row.querySelector('.qty-input').dataset.price);
+      const qty = parseInt(row.querySelector('.qty-input').value) || 0;
+      const subtotal = price * qty;
+      
+      row.querySelector('.item-total').innerText = subtotal.toLocaleString();
+      grandTotal += subtotal;
+    });
 
-        // Loop through each row
-        document.querySelectorAll('.cart-item').forEach(row => {
-            const qtyInput = row.querySelector('.qty-input');
-            const pricePerItem = parseInt(qtyInput.getAttribute('data-price'));
-            const quantity = parseInt(qtyInput.value);
-            
-            // Calculate row subtotal
-            const rowTotal = pricePerItem * quantity;
-            row.querySelector('.item-total').innerText = rowTotal;
+    grandTotalDisplay.innerText = grandTotal.toLocaleString();
+  }
 
-            grandTotal += rowTotal;
-        });
+  // Listen for quantity changes
+  cartBody.addEventListener('input', (e) => {
+    if (e.target.classList.contains('qty-input')) {
+      calculateTotal();
+    }
+  });
 
-        // Update the big total at the bottom
-        grandTotalDisplay.innerText = grandTotal.toLocaleString();
+  // Handle Remove buttons
+  cartBody.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-btn')) {
+      e.target.closest('tr').remove();
+      calculateTotal();
+    }
+  });
+
+  // Final Order logic
+  document.getElementById('order-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const total = grandTotalDisplay.innerText;
+    
+    if(total === "0") {
+      alert("Your cart is empty! Please add some beads.");
+      return;
     }
 
-    // 3. LISTEN FOR QUANTITY CHANGES
-    qtyInputs.forEach(input => {
-        input.addEventListener('input', updateTotals);
-    });
-
-    // 4. HANDLE FORM SUBMISSION
-    checkoutForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevents page from refreshing
-        
-        const customerName = document.getElementById('name').value;
-        const totalAmount = grandTotalDisplay.innerText;
-
-        // Pop up a confirmation message
-        alert(`Thank you, ${customerName}! Your order for ₦${totalAmount} has been received. Beads by Ruby will contact you soon!`);
-        
-        // Reset the form
-        checkoutForm.reset();
-        updateTotals();
-    });
+    alert(`Order Confirmed!\n\nName: ${name}\nTotal: ₦${total}\n\nBeads by Ruby will contact you shortly!`);
+  });
 </script>
 
 </body>
