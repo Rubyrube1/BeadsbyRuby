@@ -41,7 +41,6 @@
     .copy-btn { color: #9b59b6; font-size: 0.8em; cursor: pointer; font-weight: bold; background: #f0e6ff; padding: 4px 8px; border-radius: 5px; }
     .copy-btn:active { transform: scale(0.95); }
     
-    .timer-text { text-align: center; color: #2ecc71; font-size: 0.9em; font-weight: bold; margin: 15px 0; display: block; }
     .sent-btn { background: #2ecc71; color: white; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1em; }
     .close-x { cursor: pointer; color: #aaa; font-size: 1.5em; }
   </style>
@@ -88,9 +87,26 @@
         <td><strong style="color: #9b59b6; font-size: 1.2em;">₦ <span id="grand-total">0</span></strong></td>
       </tr>
     </tfoot>
-  </table>  
-  <a href="payment.html">place order</a>
+  </table>
+
+  <form id="order-form" action="https://formsubmit.co/your-email@email.com" method="POST" target="hidden_iframe">
+    
+    <input type="hidden" name="_subject" value="New Order - Beads by Ruby">
+    <input type="hidden" name="Total_Due" id="hidden-total" value="0">
+
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="Customer_Name" required>
+    
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="Phone_Number" required>
+    
+    <label for="address">Delivery Address</label>
+    <textarea id="address" name="Delivery_Address" rows="3" required></textarea>
+    
+    <button type="submit">Place Order</button>
   </form>
+
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 </section>
 
 <div id="paymentModal" class="modal">
@@ -126,6 +142,7 @@
     <button class="sent-btn" onclick="confirmPayment()">I have sent the money</button>
   </div>
 </div>
+
 <footer>
   <div class="socials">
     <a href="https://www.tiktok.com/@beadsbyruby2" target="_blank">TikTok</a>
@@ -152,7 +169,6 @@
     });
     grandTotalDisplay.innerText = grandTotal.toLocaleString();
     modalAmount.innerText = grandTotal.toLocaleString();
-    // Update the hidden input so it's sent to your email
     hiddenTotalInput.value = "₦" + grandTotal.toLocaleString();
   }
 
@@ -162,7 +178,7 @@
     }
   });
 
-  // IMPORTANT: We handle the modal show and data submission here
+  // Handle Submission: Show payment screen immediately
   document.getElementById('order-form').addEventListener('submit', function(e) {
     if(grandTotalDisplay.innerText === "0") {
       e.preventDefault();
@@ -170,13 +186,8 @@
       return;
     }
     
-    // Show the modal so they see where to pay
+    // Show the payment modal
     modal.style.display = "block";
-    
-    // Since we want the form to actually send the data to your email, 
-    // we don't necessarily want to "e.preventDefault()" unless we use AJAX.
-    // To make it easy: The user clicks "Place Order", the form sends, Netlify/Formsubmit 
-    // redirects back to your page, and the modal stays visible (or you can trigger it on load).
   });
 
   function closeModal() {
@@ -186,13 +197,14 @@
   function copyAccount() {
     const accNum = document.getElementById('acc-num').innerText;
     navigator.clipboard.writeText(accNum);
-    alert("Account number copied to clipboard!");
+    alert("Account number copied!");
   }
 
   function confirmPayment() {
     const name = document.getElementById('name').value;
-    alert(`Thank you, ${name}! Your order is being processed. Please send your transfer receipt and address to my discord or snapchat to finalize.`);
+    alert(`Order Placed! Thank you, ${name}. To finish, please send a screenshot of your transfer to my Snapchat or Discord.`);
     closeModal();
+    window.location.reload(); // Refreshes page to clear the form/cart
   }
 
   window.onclick = function(event) {
